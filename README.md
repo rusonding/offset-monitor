@@ -1,6 +1,10 @@
-"# offset-monitor" 
+Kafka Offset Monitor
+===========
 
+only support consumer new api('__consumer_offsets')
 
+Running It
+===========
 ```
 java -cp offsetapp-jar-with-dependencies.jar \
       com.quantifind.kafka.offsetapp.OffsetGetterWeb \
