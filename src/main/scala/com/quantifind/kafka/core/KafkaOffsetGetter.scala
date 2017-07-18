@@ -82,7 +82,6 @@ object KafkaOffsetGetter extends Logging {
   val topicAndGroups: mutable.Set[TopicAndGroup] = mutable.HashSet()
 
   def startOffsetListener(consumerConnector: ConsumerConnector) = {
-
     Future {
       try {
         logger.info("Staring Kafka offset topic listener")

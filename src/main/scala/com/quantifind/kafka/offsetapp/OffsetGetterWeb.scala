@@ -29,12 +29,12 @@ class OWArgs extends OffsetGetterArgs with UnfilteredWebApp.Arguments {
 
   @Required
   var refresh: FiniteDuration = _
-
   var dbName: String = "offsetapp"
 
   lazy val db = new OffsetDB(dbName)
 
   var pluginsArgs : String = _
+
 }
 
 /**
@@ -63,6 +63,7 @@ object OffsetGetterWeb extends UnfilteredWebApp[OWArgs] with Logging {
     }
   }
 
+
   def reportOffsets(args: OWArgs) {
     val groups = getGroups(args)
     groups.foreach {
@@ -74,10 +75,8 @@ object OffsetGetterWeb extends UnfilteredWebApp[OWArgs] with Logging {
   }
 
   def schedule(args: OWArgs) {
-
     scheduler.scheduleAtFixedRate( () => { reportOffsets(args) }, 0, args.refresh.toMillis, TimeUnit.MILLISECONDS )
     scheduler.scheduleAtFixedRate( () => { reporters.foreach(reporter => retryTask({reporter.cleanupOldData()})) }, args.retain.toMillis, args.retain.toMillis, TimeUnit.MILLISECONDS )
-
   }
 
   def withOG[T](args: OWArgs)(f: OffsetGetter => T): T = {
@@ -118,7 +117,6 @@ object OffsetGetterWeb extends UnfilteredWebApp[OWArgs] with Logging {
   }
 
   override def afterStop() {
-
     scheduler.shutdown()
   }
 
@@ -139,12 +137,13 @@ object OffsetGetterWeb extends UnfilteredWebApp[OWArgs] with Logging {
     args.db.maybeCreate()
 
     reporters = createOffsetInfoReporters(args)
-
+    println("=========setup===")
     schedule(args)
 
     def intent: Plan.Intent = {
       case GET(Path(Seg("group" :: Nil))) =>
-        JsonContent ~> ResponseString(write(getGroups(args)))
+        val groups: Seq[String] = getGroups(args)
+        JsonContent ~> ResponseString(write(groups))
       case GET(Path(Seg("group" :: group :: Nil))) =>
         val info = getInfo(group, args)
         JsonContent ~> ResponseString(write(info)) ~> Ok

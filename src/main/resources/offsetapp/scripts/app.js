@@ -9,7 +9,7 @@ var app = angular.module('offsetapp',
                                                          .when("/group/:group", {
                                                              templateUrl: "views/group.html",
                                                              controller: "GroupCtrl"
-                                                         })
+                                                          })
                                                          .when("/group/:group/:topic", {
                                                              templateUrl: "views/topic.html",
                                                              controller: "TopicCtrl"

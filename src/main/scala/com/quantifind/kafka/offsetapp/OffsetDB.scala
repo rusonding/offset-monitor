@@ -14,8 +14,7 @@ import scala.slick.jdbc.meta.MTable
  */
 class OffsetDB(dbfile: String) {
 
-  val database = Database.forURL(s"jdbc:sqlite:$dbfile.db",
-    driver = "org.sqlite.JDBC")
+  val database = Database.forURL(s"jdbc:sqlite:$dbfile.db", driver = "org.sqlite.JDBC")
 
   implicit val twitterTimeMap = MappedColumnType.base[Time, Long](
   {

@@ -29,7 +29,6 @@ class OffsetGetterArgs extends FieldArgs {
   var kafkaOffsetForceFromStart = false
 
   var stormZKOffsetBase = "/stormconsumers"
-
   @Required
   var zk: String = _
 
@@ -45,6 +44,7 @@ class OffsetGetterArgs extends FieldArgs {
 object OffsetGetterApp extends ArgMain[OffsetGetterArgsWGT] {
 
   def main(args: OffsetGetterArgsWGT) {
+
     var og: OffsetGetter = null
     try {
       og = OffsetGetter.getInstance(args)
