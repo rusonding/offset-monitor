@@ -1,5 +1,6 @@
 Kafka Offset Monitor
 ===========
+https://github.com/quantifind/KafkaOffsetMonitor
 
 only support consumer new api('__consumer_offsets')
 
